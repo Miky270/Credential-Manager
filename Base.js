@@ -1,8 +1,18 @@
 const prompt = require('prompt-sync')();
+//Mappa per le credenziali
 
 const credentials = new Map();
-
+/**
+*Classe per le Credenziali
+*/
 class Credential {
+    /**
+    *Creare un nuovo ogetto Credenziale
+    *@param {string} site - Il nome del sito .
+    *@param {string} username - l'Username .
+    *@param {string} password - la password .
+    *@param {string} note - le note .
+    */
     constructor(site, username, password, notes) {
         this.site = site;
         this.username = username;
@@ -11,8 +21,11 @@ class Credential {
         this.date = new Date().toLocaleString();
     }
 }
-
+/**
+* classe per gestire le credenziali
+*/
 class CredentialManager {
+    //mappa per la memorizzazione delle credenziali in liste
     constructor() {
         this.lista = new Map();
     }
