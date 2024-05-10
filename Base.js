@@ -11,7 +11,7 @@ class Credential {
     *@param {string} site - Il nome del sito .
     *@param {string} username - l'Username .
     *@param {string} password - la password .
-    *@param {string} note - le note .
+    *@param {string} notes - le note .
     */
     constructor(site, username, password, notes) {
         this.site = site;
@@ -29,12 +29,26 @@ class CredentialManager {
     constructor() {
         this.lista = new Map();
     }
+    /**
+    * Aggiunta delle Credenziali al Gestore delle Credenziali
+    *@param {string} site - Il nome del sito .
+    *@param {string} username - l'Username .
+    *@param {string} password - la password .
+    *@param {string} notes - le note .
+    */
 
     addCredentials(site, username, password, notes) {
         const credential = new Credential(site, username, password, notes);
         this.lista.set(site, credential);
     }
-
+    
+    /**
+    *Modfifica delle Credenziali nel gestore delle Credenziali
+    *@param {string} site - Il nome del sito .
+    *@param {string} username - l'Username .
+    *@param {string} password - la password .
+    *@param {string} note - le note .
+    */
     editCredentials(site, username, password, notes) {
         if (this.lista.has(site)) {
             const credential = this.lista.get(site);
@@ -46,6 +60,10 @@ class CredentialManager {
             console.log("Credenziali non trovate per il sito:", site);
         }
     }
+    /**
+    *Eliminazione delle Credenziali nel Gestore di credenziali
+    * @param {string} site - Il Nome del sito
+    */
 
     deleteCredentials(site) {
         if (this.lista.has(site)) {
@@ -55,6 +73,9 @@ class CredentialManager {
         }
     }
 }
+/**
+*Funzione principale per gestire le credenziali
+*/
 
 function main() {
     let credentialManager = new CredentialManager();
