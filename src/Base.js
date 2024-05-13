@@ -42,6 +42,17 @@ class CredentialManager {
         this.lista.set(site, credential);
     }
     
+    searchCredentials(searchTerm) {
+        searchTerm = searchTerm.toLowerCase();
+        const searchResults = [];
+        this.lista.forEach(credential => {
+            if (credential.site.toLowerCase().includes(searchTerm)) {
+                searchResults.push(credential);
+            }
+        });
+        console.log(searchResults);
+    }
+
     /**
     *Modfifica delle Credenziali nel gestore delle Credenziali
     *@param {string} site - Il nome del sito .
@@ -72,6 +83,18 @@ class CredentialManager {
             console.log("Credenziali non trovate per il sito:", site);
         }
     }
+
+    printCredentials() {
+        console.log("\nElenco delle credenziali:");
+        this.lista.forEach(credential => {
+            console.log("Sito:", credential.site);
+            console.log("Username:", credential.username);
+            console.log("Password:", credential.password);
+            console.log("Note:", credential.notes);
+            console.log("Data:", credential.date);
+            console.log("-------------------------");
+        });
+    }
 }
 /**
 *Funzione principale per gestire le credenziali
@@ -100,7 +123,11 @@ function main() {
                                 prompt("Inserisci le note:")
                             );
                 break;
-            case "2": break;
+            case "2": 
+                credentialManager.searchCredentials(
+                    (prompt("Inserisci il nome del sito:"))
+                );      
+                break;
             case "3":
                 credentialManager.editCredentials(
                                 prompt("Inserisci il sito da modificare:"), 
@@ -112,7 +139,9 @@ function main() {
             case "4":
                 credentialManager.deleteCredentials(prompt("Inserisci il sito da eliminare:"));
                 break;
-            case "5": ;break;
+            case "5": 
+                credentialManager.printCredentials();
+                break;
             case "6":
                 console.log("Arrivederci!");
                 return;
