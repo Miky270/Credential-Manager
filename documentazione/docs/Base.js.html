@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Base.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Base.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const prompt = require('prompt-sync')();
+//Mappa per le credenziali
+
+const credentials = new Map();
+/**
+*Classe per le Credenziali
+*/
+class Credential {
+    /**
+    *Creare un nuovo ogetto Credenziale
+    *@param {string} site - Il nome del sito .
+    *@param {string} username - l'Username .
+    *@param {string} password - la password .
+    *@param {string} notes - le note .
+    */
+    constructor(site, username, password, notes) {
+        this.site = site;
+        this.username = username;
+        this.password = password;
+        this.notes = notes;
+        this.date = new Date().toLocaleString();
+    }
+}
+/**
+* classe per gestire le credenziali
+*/
+class CredentialManager {
+    //mappa per la memorizzazione delle credenziali in liste
+    constructor() {
+        this.lista = new Map();
+    }
+    /**
+    * Aggiunta delle Credenziali al Gestore delle Credenziali
+    *@param {string} site - Il nome del sito .
+    *@param {string} username - l'Username .
+    *@param {string} password - la password .
+    *@param {string} notes - le note .
+    */
+
+    addCredentials(site, username, password, notes) {
+        const credential = new Credential(site, username, password, notes);
+        this.lista.set(site, credential);
+    }
+    
+    searchCredentials(searchTerm) {
+        searchTerm = searchTerm.toLowerCase();
+        const searchResults = [];
+        this.lista.forEach(credential => {
+            if (credential.site.toLowerCase().includes(searchTerm)) {
+                searchResults.push(credential);
+            }
+        });
+        console.log(searchResults);
+    }
+
+    /**
+    *Modfifica delle Credenziali nel gestore delle Credenziali
+    *@param {string} site - Il nome del sito .
+    *@param {string} username - l'Username .
+    *@param {string} password - la password .
+    *@param {string} note - le note .
+    */
+    editCredentials(site, username, password, notes) {
+        if (this.lista.has(site)) {
+            const credential = this.lista.get(site);
+            credential.username = username;
+            credential.password = password;
+            credential.notes = notes;
+            credential.date = new Date().toLocaleString();
+        } else {
+            console.log("Credenziali non trovate per il sito:", site);
+        }
+    }
+    /**
+    *Eliminazione delle Credenziali nel Gestore di credenziali
+    * @param {string} site - Il Nome del sito
+    */
+
+    deleteCredentials(site) {
+        if (this.lista.has(site)) {
+            this.lista.delete(site);
+        } else {
+            console.log("Credenziali non trovate per il sito:", site);
+        }
+    }
+
+    printCredentials() {
+        console.log("\nElenco delle credenziali:");
+        this.lista.forEach(credential => {
+            console.log("Sito:", credential.site);
+            console.log("Username:", credential.username);
+            console.log("Password:", credential.password);
+            console.log("Note:", credential.notes);
+            console.log("Data:", credential.date);
+            console.log("-------------------------");
+        });
+    }
+}
+/**
+*Funzione principale per gestire le credenziali
+*/
+
+function main() {
+    let credentialManager = new CredentialManager();
+
+    while (true) {
+        console.log("\nMenu:");
+        console.log("1. Aggiungi credenziali");
+        console.log("2. Cerca credenziali");
+        console.log("3. Modifica credenziali");
+        console.log("4. Elimina credenziali");
+        console.log("5. Stampare credenziali");
+        console.log("6. Esci");
+
+        const choice = prompt("Scelta: ");
+
+        switch (choice) {
+            case "1":
+                credentialManager.addCredentials(
+                                prompt("Inserisci il sito:"),
+                                prompt("Inserisci lo username:"), 
+                                prompt("Inserisci la password:"), 
+                                prompt("Inserisci le note:")
+                            );
+                break;
+            case "2": 
+                credentialManager.searchCredentials(
+                    (prompt("Inserisci il nome del sito:"))
+                );      
+                break;
+            case "3":
+                credentialManager.editCredentials(
+                                prompt("Inserisci il sito da modificare:"), 
+                                prompt("Inserisci il nuovo username:"), 
+                                prompt("Inserisci la nuova password:"), 
+                                prompt("Inserisci le nuove note:")
+                            );
+                break;
+            case "4":
+                credentialManager.deleteCredentials(prompt("Inserisci il sito da eliminare:"));
+                break;
+            case "5": 
+                credentialManager.printCredentials();
+                break;
+            case "6":
+                console.log("Arrivederci!");
+                return;
+            default:
+                console.log("Scelta non valida.");
+        }
+    }
+}
+
+// Chiama la funzione main
+main();
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Credential.html">Credential</a></li><li><a href="CredentialManager.html">CredentialManager</a></li></ul><h3>Global</h3><ul><li><a href="global.html#main">main</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Wed May 15 2024 12:50:22 GMT+0200 (Ora legale dell’Europa centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
