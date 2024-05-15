@@ -1,0 +1,24 @@
+{
+    "cSpell.words": [
+        "Aggiunge",
+        "Bisceglia",
+        "contenente",
+        "Crea",
+        "Elenco",
+        "Matteo",
+        "Puzzolante",
+        "Renato",
+        "ricerca",
+        "Scarale",
+        "Stampa",
+        "Termine"
+    ],
+    "cSpell.customDictionaries": {
+        "custom-dictionary-workspace": {
+            "name": "custom-dictionary-workspace",
+            "path": "${workspaceFolder:Credential-Manager}/.cspell/custom-dictionary-workspace.txt",
+            "addWords": true,
+            "scope": "workspace"
+        }
+    }
+}
