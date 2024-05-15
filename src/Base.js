@@ -1,18 +1,37 @@
-const prompt = require('prompt-sync')();
-//Mappa per le credenziali
+/**
+ * @author Scarale Matteo, Renato Bisceglia, Michele Pio Puzzolante.
+ */
 
+const prompt = require('prompt-sync')();
+
+//Mappa per le credenziali
 const credentials = new Map();
+
 /**
 *Classe per le Credenziali
+    *Creare un nuovo ogetto Credenziale
+    *@typedef {Object} OgettoCredenziali
+    *@param {string} site - Il nome del sito .
+    *@param {string} username - l'Username .
+    *@param {string} password - la password .
+    *@param {string} notes - le note .
+    *@param {string} date - la data.
 */
+
+/**
+* @class per gestire le credenziali
+*/
+
 class Credential {
     /**
-    *Creare un nuovo ogetto Credenziale
+    * Aggiunta delle Credenziali al Gestore delle Credenziali
+    *@constructs
     *@param {string} site - Il nome del sito .
     *@param {string} username - l'Username .
     *@param {string} password - la password .
     *@param {string} notes - le note .
     */
+
     constructor(site, username, password, notes) {
         this.site = site;
         this.username = username;
@@ -21,27 +40,34 @@ class Credential {
         this.date = new Date().toLocaleString();
     }
 }
-/**
-* classe per gestire le credenziali
-*/
-class CredentialManager {
-    //mappa per la memorizzazione delle credenziali in liste
-    constructor() {
-        this.lista = new Map();
-    }
-    /**
-    * Aggiunta delle Credenziali al Gestore delle Credenziali
-    *@param {string} site - Il nome del sito .
-    *@param {string} username - l'Username .
-    *@param {string} password - la password .
-    *@param {string} notes - le note .
-    */
 
+class CredentialManager {
+    /**
+    * @constructor
+    * Crea nuovo gestore di credenziali
+    **/
+constructor() {
+        this.lista = new Map(); //mappa per la memorizzazione delle credenziali
+    }
+
+    /**
+    * Aggiunge le Credenziali al Gestore delle Credenziali
+    * @function
+    * @param {string} site - Il nome del sito .
+    * @param {string} username - l'Username .
+    * @param {string} password - la password .
+    * @param {string} notes - le note .
+    */
     addCredentials(site, username, password, notes) {
         const credential = new Credential(site, username, password, notes);
         this.lista.set(site, credential);
     }
-    
+
+    /**
+     * @function
+     * @param {string} searchTerm - Il Termine di ricerca
+     * @returns {Array<CredentialObject>} - Un array contenente le credenziali
+     */
     searchCredentials(searchTerm) {
         searchTerm = searchTerm.toLowerCase();
         const searchResults = [];
@@ -55,10 +81,11 @@ class CredentialManager {
 
     /**
     *Modfifica delle Credenziali nel gestore delle Credenziali
-    *@param {string} site - Il nome del sito .
-    *@param {string} username - l'Username .
-    *@param {string} password - la password .
-    *@param {string} note - le note .
+    * @function
+    * @param {string} site - Il nome del sito .
+    * @param {string} username - l'Username .
+    * @param {string} password - la password .
+    * @param {string} note - le note .
     */
     editCredentials(site, username, password, notes) {
         if (this.lista.has(site)) {
@@ -73,6 +100,7 @@ class CredentialManager {
     }
     /**
     *Eliminazione delle Credenziali nel Gestore di credenziali
+    * @function
     * @param {string} site - Il Nome del sito
     */
 
@@ -84,6 +112,10 @@ class CredentialManager {
         }
     }
 
+    /**
+     * Stampa le credenziali
+     * @function
+     */
     printCredentials() {
         console.log("\nElenco delle credenziali:");
         this.lista.forEach(credential => {
@@ -96,8 +128,10 @@ class CredentialManager {
         });
     }
 }
+
 /**
 *Funzione principale per gestire le credenziali
+* @function
 */
 
 function main() {
