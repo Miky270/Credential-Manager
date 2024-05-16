@@ -127,6 +127,11 @@ constructor() {
             console.log("-------------------------");
         });
     }
+   /**
+   * Genera una passwuord casuale sicura con la lunghezza specificata.
+   * @param{number} length - la lunghezza della password desiderata.
+   * @returns {string} La password casuale generata.
+   */
 
     static generateSecurePassword(length) {
         const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+";
