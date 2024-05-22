@@ -2,7 +2,10 @@
  * @author Scarale Matteo, Renato Bisceglia, Michele Pio Puzzolante.
  */
 
+const fs = require('fs');
 const prompt = require('prompt-sync')();
+
+const FILE_PATH = 'credentials.json';
 
 //Mappa per le credenziali
 const credentials = new Map();
@@ -47,7 +50,7 @@ class CredentialManager {
     * Crea nuovo gestore di credenziali
     **/
 constructor() {
-        this.lista = new Map(); //mappa per la memorizzazione delle credenziali
+        this.lista = this.loadCredentialsFromFile(); //mappa per la memorizzazione delle credenziali
     }
 
     /**
@@ -61,6 +64,7 @@ constructor() {
     addCredentials(site, username, password, notes) {
         const credential = new Credential(site, username, password, notes);
         this.lista.set(site, credential);
+        this.saveCredentialsToFile();
     }
 
     /**
@@ -94,6 +98,7 @@ constructor() {
             credential.password = password;
             credential.notes = notes;
             credential.date = new Date().toLocaleString();
+            this.saveCredentialsToFile();
         } else {
             console.log("Credenziali non trovate per il sito:", site);
         }
@@ -107,6 +112,7 @@ constructor() {
     deleteCredentials(site) {
         if (this.lista.has(site)) {
             this.lista.delete(site);
+            this.saveCredentialsToFile();
         } else {
             console.log("Credenziali non trovate per il sito:", site);
         }
@@ -141,6 +147,21 @@ constructor() {
             password += charset[random];
         }
         return password;
+    }
+
+    saveCredentialsToFile() {
+        const jsonString = JSON.stringify(Array.from(this.lista.entries()));
+        fs.writeFileSync(FILE_PATH, jsonString, 'utf8');
+    }
+
+    loadCredentialsFromFile() {
+        if (fs.existsSync(FILE_PATH)) {
+            const data = fs.readFileSync(FILE_PATH, 'utf8');
+            const mapAsArray = JSON.parse(data);
+            return new Map(mapAsArray);
+        } else {
+            return new Map();
+        }
     }
 }
 
