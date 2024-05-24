@@ -1,0 +1,36 @@
+Descrizione del Codice
+
+Il codice presentato è un programma scritto in JavaScript per gestire le credenziali di vari siti web. Utilizza il modulo `prompt-sync` per l'interazione con l'utente tramite il terminale e il modulo `fs` per la gestione dei file
+
+Funzionalità Principali:
+
+- Definizione delle Classi:
+  - `Credential` rappresenta una singola credenziale, contenente informazioni come il nome del sito, l'username, la password, le note e la data di creazione;
+  - `CredentialManager` gestisce un insieme di credenziali utilizzando una mappa (`Map`) per memorizzare le credenziali, con il nome del sito come chiave;
+
+- Aggiunta delle Credenziali:
+  - L'utente può aggiungere nuove credenziali fornendo il nome del sito, l'username, la password e eventuali note. Le informazioni vengono memorizzate come un oggetto `Credential` e aggiunte alla mappa delle credenziali, salvandole su file;
+
+- Ricerca delle Credenziali:
+  - L'utente può cercare credenziali specifiche fornendo un termine di ricerca. Il programma restituisce tutte le credenziali che contengono il termine di ricerca nel nome del sito;
+
+- Modifica delle Credenziali:
+  - L'utente può modificare le credenziali esistenti fornendo il nome del sito e le nuove informazioni (username, password, note). Se il sito esiste, le credenziali vengono aggiornate con le nuove informazioni e salvate su file;
+
+- Eliminazione delle Credenziali:
+  - L'utente può eliminare le credenziali di un sito specifico fornendo il nome del sito. Se il sito esiste nella mappa delle credenziali, viene rimosso e le modifiche vengono salvate su file;
+
+- Stampa delle Credenziali:
+  - L'utente può stampare tutte le credenziali memorizzate. Il programma mostra il nome del sito, l'username, la password, le note e la data di creazione per ciascuna credenziale;
+
+- Generazione di Password Sicure:
+  - Il programma può generare password sicure di una lunghezza specificata dall'utente utilizzando un set di caratteri predefinito;
+
+- Interfaccia Utente:
+  - Il programma fornisce un menu interattivo per l'utente, con opzioni per aggiungere, cercare, modificare, eliminare e stampare le credenziali, oltre a un'opzione per generare password sicure e un'opzione per uscire dal programma. L'utente seleziona l'opzione desiderata inserendo il numero corrispondente nel terminale;
+
+Funzionamento del Programma:
+
+- All'avvio, il programma crea un'istanza di `CredentialManager` e visualizza un menu;
+- L'utente può scegliere una delle seguenti opzioni: aggiungere nuove credenziali, cercare credenziali esistenti, modificare credenziali esistenti, eliminare credenziali, stampare tutte le credenziali, generare una password sicura, uscire dal programma;
+- In base alla scelta dell'utente, il programma esegue l'operazione corrispondente, richiedendo le informazioni necessarie tramite input da terminale e mostrando i risultati delle operazioni effettuate;
