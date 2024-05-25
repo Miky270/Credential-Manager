@@ -1,0 +1,39 @@
+Quest'applicazione consente agli utenti di gestire le proprie credenziali per vari siti web. Gli utenti possono inserire il sito, l'username, la password e delle note relative alle loro credenziali.
+
+Componenti Principali App:
+-Il componente principale dell'applicazione, gestisce lo stato degli input per il sito, l'username, la password, le note e le credenziali stesse.
+
+Tag:
+-site: il sito associato alle credenziali;
+-username: l'username utilizzato per accedere al sito;
+-password: la password associata all'username;
+-notes: eventuali note aggiuntive sulle credenziali;
+-credentials: un array contenente le credenziali salvate;
+-Interfaccia Utente;
+-TextInput: Utilizzati per inserire il sito, l'username, la password e le note;
+-TouchableHighlight: Pulsanti per le azioni di aggiunta, modifica, eliminazione e ricerca delle credenziali;
+-Stili;
+
+Gli stili per l'interfaccia utente sono definiti nell'oggetto styles, utilizzando l'API StyleSheet.create.
+
+Struttura dello stile:
+-background: Stile per il background dell'applicazione;
+-scrollContainer: Stile per il contenitore dello ScrollView;
+-container: Stile per il contenitore principale dell'applicazione;
+-title: Stile per il titolo dell'applicazione;
+-input: Stile per gli input (TextInput);
+-buttonContainer: Stile per il contenitore dei pulsanti;
+-button: Stile per i pulsanti;
+-textButton: Stile per il testo dei pulsanti;
+-credentialItem: Stile per gli elementi della lista delle credenziali;
+-credentialText: Stile per il testo delle credenziali;
+
+Dipendenze:
+-react: Libreria per la creazione di interfacce utente;
+-react-native: Framework per lo sviluppo di applicazioni mobile;
+-@react-native-async-storage/async-storage: Libreria per l'accesso asincrono al localStorage;
+
+Utilizzo:
+-Clonare o scaricare il repository;
+-Installare le dipendenze usando il gestore di pacchetti npm o yarn;
+-Avviare l'applicazione su un simulatore o un dispositivo fisico;
