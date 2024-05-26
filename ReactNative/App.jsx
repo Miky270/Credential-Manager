@@ -10,6 +10,11 @@ import {
   ScrollView,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+/**
+ * gestisce lo stato del sito , ursname , password , note e credenziali
+ * fornisce funzioni per caricare , salvare , aggiungere , modificare , eliminare e cercare le credenziali
+ * @returns {JSX.Element} Il componente principale dell' app
+ */
 
 const App = () => {
   const [site, setSite] = useState('');
@@ -21,7 +26,11 @@ const App = () => {
   useEffect(() => {
     loadCredentials();
   }, []);
-
+/**
+ * carica le credenziali
+ * @async
+ * @returns {<promise<void>} una promessa che si risolve quando le credenziali sono caricate
+ */
   const loadCredentials = async () => {
     try {
       const storedCredentials = await AsyncStorage.getItem('credentials');
@@ -32,6 +41,12 @@ const App = () => {
       Alert.alert('Errore nel caricamento delle credenziali');
     }
   };
+  /**
+   * salva le credenziali
+   * @async
+   * @param {Array} newCredentials - la nuova lista di credenziali da salvare
+   * @returns {<promise<void>} una promessa che si risolve quando le credenziali sono salvate
+   */
 
   const saveCredentials = async (newCredentials) => {
     try {
@@ -40,6 +55,9 @@ const App = () => {
       Alert.alert('Errore nel salvataggio delle credenziali');
     }
   };
+  /**
+   * Gestisce l' aggiunta di una nuova credenziale
+   */
 
   const handleAdd = () => {
     const newCredential = { site, username, password, notes };
@@ -52,6 +70,10 @@ const App = () => {
     setPassword('');
     setNotes('');
   };
+  /**
+   * Gestisce la modifica di una credenziale esistente.
+   * @param {number} index - L'indice della credenziale da modificare.
+   */
 
   const handleEdit = (index) => {
     const editedCredentials = credentials.map((cred, i) =>
@@ -65,7 +87,10 @@ const App = () => {
     setPassword('');
     setNotes('');
   };
-
+/**
+ * Gestisce l'eliminazione di una credenziale
+ * @param {number} index - L'indice della credenziale da eliminare.
+ */
   const handleDelete = (index) => {
     const filteredCredentials = credentials.filter((_, i) => i !== index);
     setCredentials(filteredCredentials);
@@ -77,6 +102,9 @@ const App = () => {
     setNotes('');
   };
 
+  /**
+   * Gestisce la ricerca di una credenziale per sito.
+   */
   const handleSearch = () => {
     const foundCredential = credentials.find((cred) => cred.site === site);
     if (foundCredential) {
