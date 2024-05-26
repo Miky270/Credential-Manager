@@ -1,3 +1,7 @@
+/**
+ * Rappresenta una singola credenziale.
+ * @class
+ */
 class Credential {
     constructor(site, username, password, notes) {
         this.site = site;
@@ -8,17 +12,35 @@ class Credential {
     }
 }
 
+/**
+ * Gestisce le credenziali
+ * @class
+ */
 class CredentialManager {
+    /**
+     * Crea una nuova istanza di CredentialManager
+     * @constructs
+     */
     constructor() {
         this.lista = new Map();
         this.loadFromLocalStorage();
     }
 
+/**
+ * 
+ * @param {string} site - Il sito associato alle credenziali
+ * @param {string} username - Lo username associato alle credenziali
+ * @param {string} password - La password associato alle credenziali
+ * @param {string} notes - Le note associato alle credenziali
+ */
     addCredentials(site, username, password, notes) {
         const credential = new Credential(site, username, password, notes);
         this.lista.set(site, credential);
         this.saveToLocalStorage();
     }
+    /**
+     * Carica le credenziali dalla memoria locale.
+     */
 
     loadFromLocalStorage() {
         const storedCredentials = localStorage.getItem('credentials');
@@ -35,11 +57,16 @@ class CredentialManager {
         }
     }
 
+/**
+ * Salva le credenziali nella memoria locale.
+ */
     saveToLocalStorage() {
         const credentialsArray = Array.from(this.lista.entries());
         localStorage.setItem('credentials', JSON.stringify(credentialsArray));
     }
-
+/**
+ * Stampa le credenziali.
+ */
     printCredentials() {
         const credentialsList = document.getElementById('credentialsList');
         credentialsList.innerHTML = '';
@@ -57,7 +84,9 @@ class CredentialManager {
         });
     }
 }
-
+/**
+ * Gestisce l' aggiunta di una nuova credenziale.
+ */
 const credentialManager = new CredentialManager();
 
 function addCredential() {
@@ -73,7 +102,9 @@ function addCredential() {
     document.getElementById('password').value = '';
     document.getElementById('notes').value = '';
 }
-
+/**
+ * Stampa le credenziali.
+ */
 function printCredentials() {
     window.open('credential.html', '_blank');
 }
@@ -81,7 +112,9 @@ function printCredentials() {
 function printCredentials() {
     credentialManager.printCredentials();
 }
-
+/**
+ * Gestisce il login
+ */
 function login() {
     const site = document.getElementById('site').value;
     const username = document.getElementById('username').value;
