@@ -18,6 +18,77 @@ const App = () => {
   const [notes, setNotes] = useState('');
   const [credentials, setCredentials] = useState([]);
 
+  useEffect(() => {
+    loadCredentials();
+  }, []);
+
+  const loadCredentials = async () => {
+    try {
+      const storedCredentials = await AsyncStorage.getItem('credentials');
+      if (storedCredentials !== null) {
+        setCredentials(JSON.parse(storedCredentials));
+      }
+    } catch (error) {
+      Alert.alert('Errore nel caricamento delle credenziali');
+    }
+  };
+
+  const saveCredentials = async (newCredentials) => {
+    try {
+      await AsyncStorage.setItem('credentials', JSON.stringify(newCredentials));
+    } catch (error) {
+      Alert.alert('Errore nel salvataggio delle credenziali');
+    }
+  };
+
+  const handleAdd = () => {
+    const newCredential = { site, username, password, notes };
+    const updatedCredentials = [...credentials, newCredential];
+    setCredentials(updatedCredentials);
+    saveCredentials(updatedCredentials);
+    Alert.alert('Credenziali aggiunte con successo!');
+    setSite('');
+    setUsername('');
+    setPassword('');
+    setNotes('');
+  };
+
+  const handleEdit = (index) => {
+    const editedCredentials = credentials.map((cred, i) =>
+      i === index ? { site, username, password, notes } : cred
+    );
+    setCredentials(editedCredentials);
+    saveCredentials(editedCredentials);
+    Alert.alert('Credenziali modificate con successo!');
+    setSite('');
+    setUsername('');
+    setPassword('');
+    setNotes('');
+  };
+
+  const handleDelete = (index) => {
+    const filteredCredentials = credentials.filter((_, i) => i !== index);
+    setCredentials(filteredCredentials);
+    saveCredentials(filteredCredentials);
+    Alert.alert('Credenziali eliminate con successo!');
+    setSite('');
+    setUsername('');
+    setPassword('');
+    setNotes('');
+  };
+
+  const handleSearch = () => {
+    const foundCredential = credentials.find((cred) => cred.site === site);
+    if (foundCredential) {
+      setUsername(foundCredential.username);
+      setPassword(foundCredential.password);
+      setNotes(foundCredential.notes);
+      Alert.alert('Credenziali trovate!');
+    } else {
+      Alert.alert('Credenziali non trovate!');
+    }
+  };
+
   return (
     <View style={styles.background}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -49,23 +120,37 @@ const App = () => {
             value={notes}
           />
           <View style={styles.buttonContainer}>
-            <TouchableHighlight style={styles.button}>
+            <TouchableHighlight style={styles.button} onPress={handleAdd}>
               <Text style={styles.textButton}>Add</Text>
             </TouchableHighlight>
             <TouchableHighlight
               style={styles.button}
+              onPress={() => handleEdit(credentials.findIndex((cred) => cred.site === site))}
             >
               <Text style={styles.textButton}>Edit</Text>
             </TouchableHighlight>
             <TouchableHighlight
               style={styles.button}
+              onPress={() => handleDelete(credentials.findIndex((cred) => cred.site === site))}
             >
               <Text style={styles.textButton}>Delete</Text>
             </TouchableHighlight>
-            <TouchableHighlight style={styles.button}>
+            <TouchableHighlight style={styles.button} onPress={handleSearch}>
               <Text style={styles.textButton}>Search</Text>
             </TouchableHighlight>
           </View>
+          <FlatList
+            data={credentials}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => (
+              <View style={styles.credentialItem}>
+                <Text style={styles.credentialText}>Sito: {item.site}</Text>
+                <Text style={styles.credentialText}>Username: {item.username}</Text>
+                <Text style={styles.credentialText}>Password: {item.password}</Text>
+                <Text style={styles.credentialText}>Note: {item.notes}</Text>
+              </View>
+            )}
+          />
         </View>
       </ScrollView>
     </View>
