@@ -46,8 +46,8 @@ class CredentialManager {
         fetch('/credentials')
             .then(response => response.json())
             .then(data => {
-                data.forEach(([site, credential]) => {
-                    this.lista.set(site, new Credential(
+                data.forEach(([site, credential]) => {          // Data é una matrice
+                    this.lista.set(site, new Credential(        // Creazione nuovi oggetti
                         credential.site,
                         credential.username,
                         credential.password,
@@ -63,7 +63,7 @@ class CredentialManager {
      * Salva le credenziali sul server.
      */
     saveToServer() {
-        const credentialsArray = Array.from(this.lista.entries());
+        const credentialsArray = Array.from(this.lista.entries());          // Per sicurezza, essendo lista.entries() un oggetto iterabile, ma fetch vuole un dato primitvo
         fetch('/credentials', {
             method: 'POST',
             headers: {
@@ -85,7 +85,7 @@ class CredentialManager {
      */
     printCredentials() {
         const credentialsList = document.getElementById('credentialsList');
-        credentialsList.innerHTML = '';
+        credentialsList.innerHTML = '';                     // Svuota l'elemento div
         this.lista.forEach(credential => {
             const credentialItem = document.createElement('div');
             credentialItem.className = 'credential-item';
@@ -135,9 +135,9 @@ function login() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
-    if (site && username && password) {
+    if (site && username && password) {                 // Verifica se c'é un campo vuoto
         const credential = credentialManager.lista.get(site);
-        if (credential) {
+        if (credential) {                               // Verifica se é presenente nel Map
             if (credential.username === username && credential.password === password) {
                 alert("Login effettuato con successo!");
             } else {
