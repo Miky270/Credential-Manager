@@ -9,6 +9,7 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 const usersFilePath = path.join(__dirname, 'users.json');
+const credentialsFilePath = path.join(__dirname, 'credentials.json');
 
 // Helper function to read users from file
 const readUsers = () => {
@@ -22,6 +23,20 @@ const readUsers = () => {
 // Helper function to write users to file
 const writeUsers = (users) => {
     fs.writeFileSync(usersFilePath, JSON.stringify(users, null, 2));
+};
+
+// Helper function to read credentials from file
+const readCredentials = () => {
+    if (!fs.existsSync(credentialsFilePath)) {
+        return [];
+    }
+    const data = fs.readFileSync(credentialsFilePath, 'utf8');
+    return JSON.parse(data);
+};
+
+// Helper function to write credentials to file
+const writeCredentials = (credentials) => {
+    fs.writeFileSync(credentialsFilePath, JSON.stringify(credentials, null, 2));
 };
 
 app.post('/register', (req, res) => {
@@ -63,6 +78,17 @@ app.post('/forgot', (req, res) => {
     } else {
         res.json({ success: false, message: 'Email not found' });
     }
+});
+
+app.post('/credentials', (req, res) => {
+    const credentials = req.body;
+    writeCredentials(credentials);
+    res.json({ success: true });
+});
+
+app.get('/credentials', (req, res) => {
+    const credentials = readCredentials();
+    res.json(credentials);
 });
 
 app.listen(port, () => {

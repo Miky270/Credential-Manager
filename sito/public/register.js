@@ -18,5 +18,9 @@ document.getElementById('registerForm').addEventListener('submit', function(even
         } else {
             alert('Registration failed: ' + data.message);
         }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
     });
 });
