@@ -1,0 +1,41 @@
+<head>
+    <title>Gestore delle Credenziali</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Gestore delle Credenziali</h1>
+        <div class="form-group">
+            <div class="mt-2">
+                <input type="email" id="site" class="block w-56 rounded-md py-1.5 px-2 ring-1 ring-inset ring-gray-400 focus:text-gray-800" placeholder="Inserisci il sito (ad esempio, example.com)">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="mt-2">
+                <input type="text" id="username" class="block w-56 rounded-md py-1.5 px-2 ring-1 ring-inset ring-gray-400 focus:text-gray-800" placeholder="Inserisci il username">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="mt-2">
+                <input type="password" id="password" class="block w-56 rounded-md py-1.5 px-2 ring-1 ring-inset ring-gray-400 focus:text-gray-800" placeholder="Inserisci la password">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="mt-2">
+                <input type="text" id="notes" class="block w-56 rounded-md py-1.5 px-2 ring-1 ring-inset ring-gray-400 focus:text-gray-800" placeholder="Inserisci le note">
+            </div>
+        </div>
+
+        <button onclick="addCredential()">Aggiungi Credenziali</button>
+        <a href="login.html" target="_blank" class="login-button"><button>Login</button></a>
+        <button onclick="printCredentials()">Stampa Credenziali</button>
+
+        <div id="credentialsList"></div>
+    </div>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>
